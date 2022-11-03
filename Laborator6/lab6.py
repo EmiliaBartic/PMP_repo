@@ -38,5 +38,17 @@ if __name__ == '__main__':
         miu = pm.Deterministic('miu', alfa + beta * ppvt)
         ppvt_pred = pm.Normal('ppvt_pred', mu=miu, sd=epsilon, observed=moms_ages)
 
-    idata_g = pm.sample(2000, tune=2000, return_inferencedata=True)
+    idata_g = pm.sample(2000, tune=2000, return_inferencedata=True,model=csv_model)
     az.plot_trace(idata_g, var_names=['alfa', 'beta', 'epsilon'])
+
+#INCERCARE EX3
+#alpha_m = alfa.mean().item()
+# beta_m = beta.mean().item()
+# ppc = pm.sample_posterior_predictive(idata_g, samples=400, model=csv_model)
+# plt.plot(moms_ages, ppvt, 'b.')
+# plt.plot(moms_ages, alpha_m + beta_m * moms_ages, c='k',
+# label=f'ppvt = {alpha_m:.2f} + {beta_m:.2f} * moms_ages')
+# az.plot_hdi(moms_ages, ppc['ppvt_pred'], hdi_prob=0.5, color='grappvt', smooth=False)
+# az.plot_hdi(moms_ages, ppc['ppvt_pred'], color='grappvt', smooth=False)
+# plt.xlabel('moms_ages')
+# plt.ylabel('ppvt', rotation=0)
